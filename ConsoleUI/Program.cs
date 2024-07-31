@@ -37,7 +37,7 @@ namespace ConsoleUI
 
                 foreach (var item in productManager.GetProductDetails().Data)
                 {
-                    Console.WriteLine(item.ProductName + "--" + item.CategoryName + "--");
+                    Console.WriteLine(item.ProductName + "--");
                 }
             }
             else
