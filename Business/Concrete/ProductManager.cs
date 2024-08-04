@@ -51,7 +51,7 @@ namespace Business.Concrete
         {
             if (_productDal.GetAll(p => p.ProductName == productName).Any())
             {
-                return new ErrorResult();
+                return new ErrorResult("Aynı isimden ürün var");
             }
             return new SuccessResult();
         }
