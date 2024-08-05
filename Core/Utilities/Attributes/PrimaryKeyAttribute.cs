@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Core.Attributes
+namespace Core.Utilities.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class PrimaryKeyAttribute : Attribute
