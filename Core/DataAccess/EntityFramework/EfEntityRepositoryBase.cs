@@ -26,6 +26,7 @@ namespace Core.DataAccess.EntityFramework
         {
             using (TContext context = new TContext())
             {
+
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
                 context.SaveChanges();

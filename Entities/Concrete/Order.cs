@@ -1,12 +1,15 @@
-﻿using Core.Entities;
+﻿using Core.Attributes;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Entities.Concrete
 {
+    [Table("Orders")]
     public class Order : IEntity
     {
+        [PrimaryKey]
         public int OrderId { get; set; }
         public string CustomerId { get; set; }
         public int EmployeeId { get; set; }
