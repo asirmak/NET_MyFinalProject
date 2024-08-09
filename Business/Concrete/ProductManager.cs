@@ -41,6 +41,8 @@ namespace Business.Concrete
         //[ValidationAspect(typeof(ProductValidator))]
         [CacheRemoveAspect("IProductService.Get")]
         [TransactionScopeAspect]
+        [LogAspect(typeof(DatabaseLogger))]
+
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckIfSameProductNameExists(product.ProductName),
@@ -87,6 +89,7 @@ namespace Business.Concrete
                 (_productDal.GetAll(), Messages.ProductListed);
         }
 
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Product>> GetAllByCategoryId(int id)
         {
             return new SuccessDataResult<List<Product>>
@@ -100,6 +103,7 @@ namespace Business.Concrete
         }
 
         [CacheAspect]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>
