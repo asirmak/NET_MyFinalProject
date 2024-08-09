@@ -1,8 +1,13 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Logging;
+using Core.Aspects.Autofac.Performance;
 using Core.Aspects.Autofac.Security;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Logging.Log4Net.Loggers;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -16,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using ValidationException = FluentValidation.ValidationException;
 
 namespace Business.Concrete
@@ -33,6 +39,8 @@ namespace Business.Concrete
 
         //[SecuredOperation("product.add, admin")]
         //[ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
+        [TransactionScopeAspect]
         public IResult Add(Product product)
         {
             IResult result = BusinessRules.Run(CheckIfSameProductNameExists(product.ProductName),
@@ -65,7 +73,9 @@ namespace Business.Concrete
             return new SuccessResult();
 
         }
-
+        [CacheAspect]
+        [PerformanceAspect(1)]
+        [LogAspect(typeof(DatabaseLogger))]
         public IDataResult<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 22 )
@@ -73,7 +83,6 @@ namespace Business.Concrete
                 return new ErrorDataResult<List<Product>>
                     (Messages.MaintenanceTime);
             }
-
             return new SuccessDataResult<List<Product>>
                 (_productDal.GetAll(), Messages.ProductListed);
         }
@@ -90,6 +99,7 @@ namespace Business.Concrete
                 (_productDal.GetAll(p=> p.UnitPrice>=min && p.UnitPrice <= max), Messages.ProductListed);
         }
 
+        [CacheAspect]
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>
@@ -102,6 +112,7 @@ namespace Business.Concrete
                 (_productDal.GetProductDetails(), Messages.ProductListed);
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Product product)
         {
             _productDal.Update(product);
