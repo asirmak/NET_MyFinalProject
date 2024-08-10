@@ -34,7 +34,7 @@ This repository contains a .NET Core project that leverages the Northwind SQL da
 
 ### Switching to Entity Framework
 
-To switch from Dapper to Entity Framework, update the IoC (Inversion of Control) container configuration in the `Startup.cs` file. This allows you to switch ORMs with minimal code changes, giving you the flexibility to choose the best tool for your needs.
+To switch from Dapper to Entity Framework, update the IoC (Inversion of Control) container configuration in the `Business\DependencyResolvers\Autofac\AutofacBusinessModule.cs` file. This allows you to switch ORMs with minimal code changes, giving you the flexibility to choose the best tool for your needs.
 
 ## Contributing
 
