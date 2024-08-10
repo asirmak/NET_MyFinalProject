@@ -32,7 +32,7 @@ This repository contains a .NET Core project that leverages the Northwind SQL da
 - **SQL Server**: The relational database management system used to manage the Northwind database.
 - **Autofac**: An IoC container used to implement AOP techniques for handling concerns such as security, validation, and logging.
 
-### Switching to Entity Framework
+## Switching to Entity Framework
 
 To switch from Dapper to Entity Framework, update the IoC (Inversion of Control) container configuration in the `Business\DependencyResolvers\Autofac\AutofacBusinessModule.cs` file. This allows you to switch ORMs with minimal code changes, giving you the flexibility to choose the best tool for your needs.
 
